@@ -1,29 +1,32 @@
 package edu.csusm;
 
+import java.util.ArrayList;
+
 public class KeyManager {
+    private KeyManager password;
+    ArrayList<String>inputs = new ArrayList<String>();
     public KeyManager() {
+
     }
 
     public static synchronized KeyManager getPassword() {
         return null;
     }
 
-    public void addPassword(String name, String password) {
+    public void passwordCommand(int c){
+        // command 4 is to undo
+        CommandInvoker command = new CommandInvoker();
+        //command 1 is delete
+        command.AddPassword(password, c);
+        //command 2 is add
+        command.DeletePassword(password, c);
+        //command 3 is edit
+        command.EditPassword(password, c);
     }
 
-    public void editPassword(String oldPass, String newPass) {
-    }
-
-    public void deleteAPassword(String passwordName) {
-    }
-
-    public void encrypt (String pass, int key) {
-    }
-
-    public void decrypt(String pass, int key) {
-    }
-
-    public String toHexString(byte[] arr) {
-        return null;
+    public void encryption (String pass, int key) {
+        //SecurePasswordIF secure;
+        //call encrypt
+        //call decrypt
     }
 }
