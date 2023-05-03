@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -58,6 +57,7 @@ public class HomePage {
 
     User user;
     Recovery recovery;
+    KeyManager managePassword = new KeyManager();
 
     //Homepage window
     public HomePage(User u) {
@@ -517,12 +517,11 @@ public class HomePage {
             @Override
             public void actionPerformed(ActionEvent event) {
                 System.out.println("save change button works"); // test if button works
-                KeyManager manageUser = new KeyManager();
+                managePassword.setPassword(newPass.getText());
 
                 try {
-                    manageUser.addPassword(newName.getText(), newPass.getText());
+                    managePassword.passwordCommand(1); // command 1 to add
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -609,9 +608,12 @@ public class HomePage {
             @Override
             public void actionPerformed(ActionEvent event) {
                 System.out.println("save button works"); // test if button works
-                KeyManager manageUser = new KeyManager();
-                manageUser.editPassword(editOldPass.getText(), editNewPass.getText()); //gets the old and new password from textfields
-
+                managePassword.setPassword(editNewPass.getText()); // new password from textfields
+                try {
+                    managePassword.passwordCommand(3); // command 1 to add
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 //remove contents
                 panel3.remove(editOldPassLabel);
                 panel3.remove(editOldPass);
@@ -635,7 +637,6 @@ public class HomePage {
             @Override
             public void actionPerformed(ActionEvent event) {
                 System.out.println("exit button works"); // test if button works
-                KeyManager manageUser = new KeyManager();
 
                 //remove contents
                 panel3.remove(editOldPassLabel);
@@ -656,8 +657,7 @@ public class HomePage {
     //View Password View
     public void viewPasswords() {
         // search by name
-        KeyManager manageUser = new KeyManager();
-        //manageUser.viewAllPasswords(newName.getText());
+        //managePasswprd.viewAllPasswords(newName.getText());
         //view all password
     }
 
@@ -691,8 +691,13 @@ public class HomePage {
             @Override
             public void actionPerformed(ActionEvent event) {
                 System.out.println("delete button works"); // test if button works
-                KeyManager manageUser = new KeyManager();
-                manageUser.deleteAPassword(deletePass.getText());
+                managePassword.setPassword(deletePass.getText());
+
+                try{
+                    managePassword.passwordCommand(2); // command 2 to delete
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
                 //remove contents
                 panel3.remove(deletePassLabel);
@@ -726,7 +731,6 @@ public class HomePage {
             @Override
             public void actionPerformed(ActionEvent event) {
                 System.out.println("exit button works"); // test if button works
-                KeyManager manageUser = new KeyManager();
 
                 //remove contents
                 panel3.remove(deletePassLabel);

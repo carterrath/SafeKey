@@ -12,7 +12,7 @@ public class User extends UserAbstract{
     static String newInfo = "";
     UserDAO user;
     Scanner usersFileReader;
-    AccountIF account;
+    AccountAccessIF account;
 
     public void setIsUser(boolean u) {
         isUser = u;
@@ -31,7 +31,7 @@ public class User extends UserAbstract{
         return isUser;
     }
 
-    public void setAccount(AccountIF a) {
+    public void setAccount(AccountAccessIF a) {
         account = a;
     }
 
