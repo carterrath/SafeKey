@@ -1,60 +1,48 @@
 package edu.csusm;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.Scanner;
 
-public class User extends UserAbstract{
-    String path = "C:\\Users\\ruthi\\OneDrive\\Documents\\SE 471\\Project\\SafeKeyProject\\SafeKey\\src\\main\\java\\edu\\csusm\\usersFile.txt";
-    static boolean isUser = false;
-    static String[] tokens = new String[6];
-    static String newInfo = "";
-    UserDAO user;
-    Scanner usersFileReader;
-    AccountAccessIF account;
-
+public class User{
+    private boolean isUser;
+    private String userName;
+    private String password;
+    public static User u;
+    User(String user, String pass){
+        this.userName = user;
+        this.password = pass;
+        u = this;
+    }
+    public void setUserName(String user){
+        this.userName = user;
+    }
+    public String getUserName(){
+        return this.userName;
+    }
+    public void setPassword(String pass){
+        this.password = pass;
+    }
+    public String getPassword(){
+        return this.password;
+    }
     public void setIsUser(boolean u) {
         isUser = u;
     }
 
     public boolean isUser(String userName, String userPasscode) throws FileNotFoundException{
-        parseFile();//parse file first
-
-        if (userPasscode.equals(user.getPasscode()) && userName.equals(user.getUsername())) {
-            setIsUser(true);
-        } else {
-            setIsUser(false);
+        this.userName = userName;
+        this.password = password;
+        String[] arr = UserDAO.parseFile(userName);//parse file first
+        if(arr == null){
+            return false;
         }
-
-        usersFileReader.close();
+        String user = arr[0];
+        String pass = arr[1];
+        if (userPasscode.equals(pass) && userName.equals(user)) {
+            isUser = true;
+        }
+        else {
+            isUser = false;
+        }
         return isUser;
     }
-
-    public void setAccount(AccountAccessIF a) {
-        account = a;
-    }
-
-    public void parseFile() throws FileNotFoundException{
-
-        usersFileReader = new Scanner(new File(path));
-
-        while (usersFileReader.hasNextLine()){
-            String info = usersFileReader.nextLine();
-            String delims = "[ ]+";
-            tokens = info.split(delims);
-
-            user = new UserDAO(tokens[0], tokens[1], tokens[2], tokens[3],
-                    tokens[4], tokens[5]);
-        }
-        usersFileReader.close();
-    }
-
-    public void writeFile(String userInfo) throws FileNotFoundException{
-        // add to file
-        PrintWriter usersFileWriter = new PrintWriter(new File(path));
-        usersFileWriter.println(userInfo);
-        usersFileWriter.close();
-    }
-
 }

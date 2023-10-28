@@ -1,46 +1,51 @@
 package edu.csusm;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 public class KeyManager {
-    private static KeyManager password;
-    LinkedList<Integer>commands = new LinkedList<Integer>();
-    String input;
-    ArrayList<String>inputs = new ArrayList<String>();
-    public KeyManager() {
-
+    private static KeyManager km = null;
+    private final CommandInvoker ci;
+    private KeyManager() {
+        ci = new CommandInvoker();
     }
-
-    public static synchronized KeyManager getPassword() {
-        return password;
-    }
-
-    public void setPassword(String pass){
-        input = pass;
-    }
-
-    public void passwordCommand(int c){
-        CommandInvoker command = new CommandInvoker();
-        switch (c){
-            case 1: 
-                command.AddPassword(this, c); //command 1 is add
-                commands.push(c);
-            case 2: 
-                command.DeletePassword(this, c); //command 2 is delete
-                commands.push(c);
-            case 3: 
-                command.EditPassword(this, c); //command 3 is edit
-                commands.push(c);
-            case 4: // command 4 is to undo
-                commands.pop();
-            default: System.out.print("Command not recognized");
+    public static KeyManager getInstance() {
+        if (km == null) {
+            km = new KeyManager();
         }
+        return km;
     }
-
-    public void encryption (String pass, int key) {
-        //SecurePasswordIF secure;
-        //call encrypt
-        //call decrypt
+    public void addCommand(int encryptType, String site, String pass, int action) throws Exception {
+        String ePass = encryption(pass,encryptType, 1);
+        ci.AddPassword(site, ePass, action, encryptType);
+    }
+    public void deleteCommand(String site, int action) throws Exception {
+        ci.DeletePassword(site, action);
+    }
+    public void editCommand(String site, String pass, int action) throws Exception {
+        ci.EditPassword(site, pass, action);
+    }
+    public String encryption (String pass, int method, int command) throws Exception {
+        SecurePasswordIF secure;
+        //call encrypt (command 1)
+        //call decrypt (command 2)
+        // method 0 is AES
+        if(method == 0){
+            secure = new EncryptionAES();
+            if(command == 1){
+                return secure.encrypt(pass);
+            }
+            else if(command == 2){
+                return secure.decrypt(pass);
+            }
+        }
+        // method 1 is Blowfish
+        else if(method == 1){
+            secure = new EncryptionBlowfish();
+            if(command == 1){
+                return secure.encrypt(pass);
+            }
+            else if(command == 2){
+                return secure.decrypt(pass);
+            }
+        }
+        return null;
     }
 }

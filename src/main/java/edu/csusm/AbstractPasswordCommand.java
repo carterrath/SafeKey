@@ -1,9 +1,10 @@
 package edu.csusm;
 
-public class AbstractPasswordCommand {
-    public void doIt() {
+public abstract class AbstractPasswordCommand {
+    public void doIt() throws Exception {
     }
-
-    public void undoIt() {
+    public void undoIt() throws Exception {
+    }
+    public void redoIt() throws Exception {
     }
 }
