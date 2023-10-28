@@ -2,10 +2,10 @@
 Carter Rath, Ruth Jimenez, Mae Pereyra
 
 Password storage application from our Software Engineering Design Patterns class.
-#INTRODUCTION
+# INTRODUCTION
 Description/Background: Safe Key is an application that provides a secure and convenient hub to store any number of passwords. The application will create secure password storage through the use of encryption by taking the user’s passwords and encrypting them. The user can only access it with their own specialized login information, which adds another layer of security to the application. The main features include a UI, which displays login details as soon as the app is run. After the user successfully logs in, the user interacts with the UI to view and modify their passwords. For password management, there’s adding, editing, deleting, and viewing the stored passwords. The password information is stored in an account text file where it is accessed by a data access object for modification and parsing. For account management, there’s changing passwords, forgetting passcode, and setting up recovery. None of them can be accessed until set-up recovery is done.
 
-#Key Features to Develop: 
+# Key Features to Develop: 
 - Less memory is used - The new program implements four design patterns that would allow restructuring our software to be more organized and reusable instead of using more memory to duplicate them. 
 - New GUI - The new program implements a new GUI to be more user-friendly. For the original 370 project, the homepage was used as one panel and would constantly modify the panel depending on the module the user selected (add, edit, delete, view). At the start of our new implementation for 471, it was noticed that there were some bugs with the homepage panel so NetBeans was used to design the GUI which made it simpler for the user to move between the panels as certain buttons were pressed. 
 Removed unused features - The new program removes any unnecessary features that were not used again. For example, in the Account Management module, a setup recovery was included. In the create account module, several additional text fields were included for the user's full name, email, and date of birth. Seeing as these features are never used after account creation, it was decided to remove them. Now, only a username and password can be entered in the initial CreateAccountScreen. Additionally, instead of having account recovery in its own module, it is added to the account creation module as shown below:
